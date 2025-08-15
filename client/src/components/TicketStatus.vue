@@ -1,31 +1,67 @@
 <script setup>
-    //
-
-    import { TicketStatusOptions, GetStatusName, GetStatusClass } from '@/composables/tickets'
-
+    // Import your existing functions (update the path as needed)
+    // import { TicketStatusOptions, GetStatusName, GetStatusClass } from '@/composables/tickets'
+    
     const props = defineProps(['status'])
-
-    // Add handling for status -2
-    const getStatusInfo = (status) => {
-    switch(status) {
-        case -2:
-            return { text: 'Cancelled', class: 'cancelled' }
-        case -1:
-            return { text: 'Waiting Approval', class: 'waiting' }
-        // ... your other status cases
+    
+    // Fixed status handling functions
+    const GetStatusName = (status) => {
+        switch(status) {
+            case -2:
+                return 'Cancelled'
+            case -1:
+                return 'Waiting Approval'
+            case 0:
+                return 'Submitted'
+            case 1:
+                return 'Approved'
+            case 2:
+                return 'Device Received'
+            case 3:
+                return 'Repairing'
+            case 4:
+                return 'Pending Payment'
+            case 5:
+                return 'Posted to Customer'
+            case 6:
+                return 'Completed'
+            default:
+                return 'Unknown'
+        }
     }
-}
+    
+    const GetStatusClass = (status) => {
+        switch(status) {
+            case -2:
+                return 'cancelled'
+            case -1:
+                return 'waitapproval'
+            case 0:
+                return 'submitted'
+            case 1:
+                return 'approved'
+            case 2:
+                return 'receiveddevice'
+            case 3:
+                return 'repairing'
+            case 4:
+                return 'pendingpayment'
+            case 5:
+                return 'postedtocustomer'
+            case 6:
+                return 'completed'
+            default:
+                return 'unknown'
+        }
+    }
 </script>
 
 <template>
     <span :class="['ticket-status', GetStatusClass(props.status)]">{{ GetStatusName(props.status) }}</span>
 </template>
 
-<style></style>
-
 <style>
     .ticket-status {
-        /* max-width: 100px; */
         border-radius: 5px;
         background-color: grey;
         color: white;
@@ -33,6 +69,11 @@
         padding: 5px 0.9em;
         text-align: center;
         font-weight: 900;
+    }
+
+    .ticket-status.cancelled {
+        background-color: #666;
+        color: white;
     }
 
     .ticket-status.waitapproval {
